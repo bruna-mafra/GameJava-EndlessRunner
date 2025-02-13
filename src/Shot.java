@@ -22,7 +22,7 @@ public class Shot {
     }
 
     public void update(){
-        positon.x += speed; //Mover o tiro para a direita
+        positon.x += speed; // Mover o tiro para a direita
         bouds.setPosition(positon.x, positon.y);
     }
 

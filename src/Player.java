@@ -37,7 +37,7 @@ public class Player {
     }
     public void jump(){
         if(position.y == 100){
-            velocity.y = JUMP_VELOCITY;
+            velocity.y = JUMP_VELOCITY; // Velocidade do pulo
         }
     }
     public void draw(SpriteBatch batch){

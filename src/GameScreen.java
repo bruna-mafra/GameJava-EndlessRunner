@@ -3,8 +3,8 @@ import org.lwjgl.opengl.GL20;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.audio.Sound; // 🔊 Importa sons
+import com.badlogic.gdx.audio.Music; // Importa sons: trilha de fundo
+import com.badlogic.gdx.audio.Sound; // Importa sons: efeitos sonoros
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -13,25 +13,25 @@ import com.badlogic.gdx.utils.TimeUtils;
 
 public class GameScreen extends ApplicationAdapter {
     private SpriteBatch batch;
-    private Texture background;
-    private Player player;
-    private Array<Obstacle> obstacles;
+    private Texture background;  // Imagem de fundo
+    private Player player;  // Bruxinha
+    private Array<Obstacle> obstacles;  // Lista de obstáculos
     private long lastObstacleTime;
-    private int score;
-    private int powers;
-    private int lives;  // 🔴 Nova variável para contar as vidas
-    private boolean isGameOver; // 🔴 Controle de fim de jogo
-    private boolean isVictory;  // 🔴 Controle de vitória
-    private Array<Shot> shots;
+    private int score;  // Pontuação
+    private int powers;  // Controle de poderes
+    private int lives;  // Nova variável para contar as vidas
+    private boolean isGameOver; // Controle de fim de jogo
+    private boolean isVictory;  // Controle de vitória
+    private Array<Shot> shots;  // Controle de feitiços
     private BitmapFont font;
     private Music backgroundMusic;
-    private Texture heartTexture; // 🔴 Nova variável para o ícone de coração
-    private Sound gameOverSound; // 🔊 Som para Game Over
-    private Sound victorySound; // 🔊 Som para Vitória
-    private Sound powerSound; // 🔊 Som para o poder lançado
+    private Texture heartTexture; //  Ícone de coração
+    private Sound gameOverSound; // Som para Game Over
+    private Sound victorySound; // Som para Vitória
+    private Sound powerSound; // Som para o poder lançado
 
     @Override
-    public void create(){
+    public void create(){  // função de inicialização
         batch = new SpriteBatch();
         background = new Texture(Gdx.files.internal("assets/background.png"));
         heartTexture = new Texture(Gdx.files.internal("assets/coracao.png")); 
@@ -41,19 +41,19 @@ public class GameScreen extends ApplicationAdapter {
 
         score = 0;
         powers = 0;
-        lives = 3; // 🔴 Jogador começa com 3 vidas
-        isGameOver = false; // 🔴 Inicialmente o jogo está ativo
-        isVictory = false; // 🔴 Inicialmente o jogo não foi vencido
-        shots = new Array<>();
+        lives = 3; // Jogador começa com 3 vidas
+        isGameOver = false; // Inicialmente o jogo está ativo
+        isVictory = false; // Inicialmente o jogo não foi vencido
+        shots = new Array<>();  // Array de feitiços vazio
         font = new BitmapFont();
 
-        // 🔊 Música de fundo
+        // Música de fundo
         backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("assets/lua_de_cristal.mp3"));
         backgroundMusic.setLooping(true);
         backgroundMusic.setVolume(0.5f);
         backgroundMusic.play();
 
-          // 🔊 Carregar efeitos sonoros
+          // Efeitos sonoros
         gameOverSound = Gdx.audio.newSound(Gdx.files.internal("assets/game_over.mp3"));
         victorySound = Gdx.audio.newSound(Gdx.files.internal("assets/victory.ogg"));
         powerSound = Gdx.audio.newSound(Gdx.files.internal("assets/poder.wav"));
@@ -81,38 +81,40 @@ public class GameScreen extends ApplicationAdapter {
             shot.draw(batch);
         }
 
-        // 🔴 Ajustar a posição dos corações
+        // Ajustar a posição dos corações
         int heartY = Gdx.graphics.getHeight() - 70; 
         for (int i = 0; i < lives; i++) {
             batch.draw(heartTexture, 10 + (i * 40), heartY, 32, 32);
         }
 
-        // 🔴 Ajustar a posição do Score e Powers
+        // Ajustar a posição do Score e indicador do número de Feitiços disponíveis
         int scoreY = heartY - 30;  
         font.draw(batch, "Score: " + score, 10, scoreY);
         font.draw(batch, "Feitiços: " + powers, 10, scoreY - 30);
 
-        // 🔴 Se for game over ou vitória, exibe a mensagem
+        // Se for game over, exibe a mensagem
         if (isGameOver) {
             font.draw(batch, "GAME OVER!", Gdx.graphics.getWidth() / 2 - 50, Gdx.graphics.getHeight() / 2);
             
+        // Se for vitória, exibe a mensagem
         } else if (isVictory) {
             font.draw(batch, "VITÓRIA!", Gdx.graphics.getWidth() / 2 - 50, Gdx.graphics.getHeight() / 2);
         }
 
+        // Finaliza o jogo
         batch.end();        
     }
 
     private void update(){
-        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){  // Espaço: pulo
             player.jump();
         }
-        if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER) && powers > 0){
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER) && powers > 0){  // Enter: usa feitiço
             userPower();
         }
         player.update();
 
-        // 🔴 Verifica se o jogador venceu
+        // Verifica se o jogador venceu quando o score chega a 20 pontos
         if (score >= 20) {
             victory();
             return;
@@ -129,7 +131,7 @@ public class GameScreen extends ApplicationAdapter {
             obstacle.update();
 
             if (obstacle.getBounds().overlaps(player.getBounds())) {
-                lives--; // 🔴 Perde uma vida ao bater
+                lives--; // Perde uma vida ao colidir com um caldeirão (obstáculo)
                 Gdx.app.log("Game", "O jogador perdeu uma vida! Vidas restantes: " + lives);
                 iterator.remove(); // Remove o obstáculo atingido
 
@@ -177,14 +179,14 @@ public class GameScreen extends ApplicationAdapter {
         Gdx.app.log("Game", "VITÓRIA! O jogador atingiu 20 pontos.");
         isVictory = true;
         backgroundMusic.stop();
-        victorySound.play(); // 🔊 Toca o som de vitória!
+        victorySound.play(); // Toca o som de vitória
     }
 
     private void gameOver() {
         Gdx.app.log("Game", "GAME OVER! O jogador perdeu todas as vidas.");
         isGameOver = true;
         backgroundMusic.stop();
-        gameOverSound.play(); // 🔊 Toca o som de game over!
+        gameOverSound.play(); // Toca o som de game over
     }
 
     private void spawnObstacle(){
@@ -205,10 +207,10 @@ public class GameScreen extends ApplicationAdapter {
         for (Shot shot : shots) {
             shot.dispose();
         }
-        backgroundMusic.dispose();
-        gameOverSound.dispose(); // 🔊 Libera memória do som de game over
-        victorySound.dispose(); // 🔊 Libera memória do som de vitória
-        powerSound.dispose(); // 🔊 Libera memória do som de poder
+        backgroundMusic.dispose(); // Libera memória da música de fundo
+        gameOverSound.dispose(); // Libera memória do som de game over
+        victorySound.dispose(); // Libera memória do som de vitória
+        powerSound.dispose(); // Libera memória do som de poder
     }
 
     @Override
@@ -233,9 +235,9 @@ public class GameScreen extends ApplicationAdapter {
                 player.getPosition().y + player.getBounds().height / 2
             );
             shots.add(shot);
-            powers--;
+            powers--;  // Remove 1 do número de feitiços
             Gdx.app.log("Game", "Poder utilizado!");
-            powerSound.play(); // 🔊 Toca o som ao usar o poder!
+            powerSound.play(); // Toca o som de poder ao usar o feitiço
         }
     }
 }
