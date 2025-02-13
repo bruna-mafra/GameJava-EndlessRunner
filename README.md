@@ -1,7 +1,7 @@
 # 🎮 Jogo da Bruxinha - Endless Runner
 
-## 📌 Sobre o Jogo
-O **Jogo da Bruxinha** é um jogo estilo **Endless Runner** onde a jogadora controla uma pequena bruxa que deve **pular obstáculos** e **usar poderes** para destruí-los. O jogo termina em **Game Over** caso perca todas as vidas ou em **Vitória** ao atingir 20 pontos.
+## 📌 Sobre o jogo
+O **Jogo da Bruxinha** é um jogo estilo **Endless Runner** onde o jogador controla uma pequena bruxa que deve **pular obstáculos** e **usar poderes** para destruí-los. O jogo termina em **Game Over** caso perca todas as vidas ou em **Vitória** ao atingir 20 pontos.
 
 ## 🛠️ Requisitos
 Antes de rodar o jogo, você precisa ter o **Java e JDK** instalados no seu computador.
@@ -18,11 +18,13 @@ Se aparecer a versão do Java instalada, está tudo certo! Reiniciar seu computa
 
 ---
 
-## 🚀 Como Rodar o Jogo
+## 🚀 Como rodar o jogo
 
-1️⃣ **Abra o terminal ou prompt de comando e vá até a pasta do jogo:**
+
+1️⃣ **Abra o prompt de comando, clone o repositório e entre na pasta do jogo:**
 ```sh
-cd caminho/para/o/projeto/GameJava
+git clone https://github.com/bruna-mafra/GameJava-EndlessRunner.git
+cd GameJava-EndlessRunner
 ```
 
 2️⃣ **Compile o código:**
@@ -38,7 +40,7 @@ Agora o jogo será iniciado! 🎮
 
 ---
 
-## 🎮 Como Jogar
+## 🎮 Como jogar
 - **Pular:** Pressione **ESPAÇO** para fazer a bruxinha pular e evitar os obstáculos.
 - **Soltar Poder:** Pressione **ENTER** para lançar um feitiço contra os obstáculos.
 - **Pontuação:** Cada obstáculo ultrapassado soma **+1 ponto** no Score.
@@ -61,7 +63,7 @@ O jogo conta com **trilha sonora e efeitos sonoros** para maior imersão:
 
 ---
 
-## 📂 Estrutura do Projeto
+## 📂 Estrutura do projeto
 ```
 GameJava/
 ├── assets/          # Contém imagens e sons do jogo
